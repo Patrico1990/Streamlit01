@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 
-import yfinance as yf
+# import yfinance as yf
 
 import matplotlib.pyplot as plt
 import plotly.express as px
@@ -15,12 +15,12 @@ def cosine_similarity(a:np.array, b:np.array) -> float:
     result = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
     return result
 
-def load_data(ticker:str, days:int=10, period:str="10y") -> pd.DataFrame:
-    df_ = yf.download(ticker, period=period)
-    close_ = df_[["Close"]].reset_index()
-    now_ = close_.iloc[-days:].reset_index(drop=True)
-    past_ = close_.iloc[:-1].reset_index(drop=True)
-    return now_, past_
+# def load_data(ticker:str, days:int=10, period:str="10y") -> pd.DataFrame:
+#     df_ = yf.download(ticker, period=period)
+#     close_ = df_[["Close"]].reset_index()
+#     now_ = close_.iloc[-days:].reset_index(drop=True)
+#     past_ = close_.iloc[:-1].reset_index(drop=True)
+#     return now_, past_
 
 # Streamlit
 st.title("Stock Prediction")
@@ -53,7 +53,12 @@ with col4:
 
 st.divider()
     
-now, past = load_data(ticker=TICKER, days=DAYS_BEFORE)
+# now, past = load_data(ticker=TICKER, days=DAYS_BEFORE)
+csv_path = "./data/AAPL.csv"
+df = pd.read_csv(csv_path)
+close = df[["Close"]]
+now = close.iloc[-DAYS_BEFORE:].reset_index(drop=True)
+past = close.iloc[:-1].reset_index(drop=True)
 
 TODAY = now.iloc[-1]["Date"]
 st.write("Date:", TODAY)
