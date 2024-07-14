@@ -56,9 +56,9 @@ st.divider()
 # now, past = load_data(ticker=TICKER, days=DAYS_BEFORE)
 csv_path = "./data/AAPL.csv"
 df = pd.read_csv(csv_path)
-close = df[["Close"]]
-now = close.iloc[-DAYS_BEFORE:].reset_index(drop=True)
-past = close.iloc[:-1].reset_index(drop=True)
+close = df[["Date", "Close"]]
+now = close.iloc[-DAYS_BEFORE:]
+past = close.iloc[:-1]
 
 TODAY = now.iloc[-1]["Date"]
 st.write("Date:", TODAY)
